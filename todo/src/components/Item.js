@@ -1,18 +1,19 @@
-import { useReducer } from 'react';
-import reducer from '../reducers/itemReducer';
+import { setCompleted } from '../actions/itemActions';
 
-export default function Item() {
-	const initialState = {
-		item: 'call dad',
-		id: Date.now(),
-		completed: false,
-	};
-
-	const [state, dispatch] = useReducer(reducer, initialState);
+export default function Item(props) {
+	const { state, dispatch } = props;
+	console.log('state', state);
 
 	return (
 		<div>
-			<h2>{state.item}</h2>
+			<button
+				onClick={() => {
+					dispatch(setCompleted(!state.completed));
+				}}
+				className={`item ${state.completed ? 'completed' : ' '}`}
+			>
+				{state.item}
+			</button>
 		</div>
 	);
 }

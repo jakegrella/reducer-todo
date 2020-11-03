@@ -1,4 +1,9 @@
-import { SET_ITEM, SET_ID, SET_COMPLETED } from '../actions/itemActions';
+import {
+	SET_ITEM,
+	SET_ID,
+	SET_COMPLETED,
+	ADD_ITEM,
+} from '../actions/itemActions';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -8,6 +13,8 @@ const reducer = (state, action) => {
 			return { ...state, id: action.payload };
 		case SET_COMPLETED:
 			return { ...state, completed: action.payload };
+		case ADD_ITEM:
+			return { ...state, item: action.payload };
 		default:
 			return state;
 	}
