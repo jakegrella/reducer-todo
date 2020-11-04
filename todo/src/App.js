@@ -8,17 +8,22 @@ import { addItem, setItem } from './actions/itemActions';
 
 function App() {
 	const initialState = {
-		item: 'visit great barrier reef',
-		id: Date.now(),
-		completed: false,
+		items: [
+			{
+				item: 'visit great barrier reef',
+				id: Date.now(),
+				completed: false,
+			},
+		],
 	};
 
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const handleAdd = (e) => {
 		e.preventDefault();
-		console.log('value', e.target.value);
+		console.log('e.targ', e.target.value);
 		dispatch(addItem(e.target.value));
+		// console.log('handleAdd', state.items);
 	};
 
 	const handleChange = (e) => {
@@ -28,19 +33,20 @@ function App() {
 	return (
 		<div className='App'>
 			<h1>Bucket List</h1>
+			<button>clear completed</button>
 			<ItemList state={state} dispatch={dispatch} />
 
 			<form onSubmit={handleAdd}>
 				<input
 					type='text'
 					name='newItem'
-					value={state.item}
+					value={handleChange}
 					onChange={handleChange}
 				/>
 				<button
 					type='submit'
 					onClick={() => {
-						dispatch(addItem(state.item));
+						dispatch(handleAdd);
 					}}
 				>
 					add
