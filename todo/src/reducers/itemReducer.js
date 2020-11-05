@@ -1,26 +1,59 @@
-import {
-	SET_ITEM,
-	SET_ID,
-	SET_COMPLETED,
-	ADD_ITEM,
-} from '../actions/itemActions';
+const initialState = {
+	items: [
+		{
+			item: 'visit great barrier reef',
+			id: Date.now(),
+			completed: false,
+		},
+	],
+	input: '',
+};
 
 const reducer = (state, action) => {
 	switch (action.type) {
-		case SET_ITEM:
-			return { ...state, item: action.payload };
-		case SET_ID:
-			return { ...state, id: action.payload };
-		case SET_COMPLETED:
-			return { ...state, completed: action.payload };
-		// case ADD_ITEM:
-		// 	return { ...state, item: action.payload };
-		case ADD_ITEM:
-			let newItem = { item: action.payload, id: Date.now(), completed: false };
-			return { items: [newItem] };
+		case 'ADD_ITEM':
+			return {
+				...state,
+				items: [
+					...state.items,
+					{
+						item: action.payload,
+						id: Date.now(),
+						completed: false,
+					},
+				],
+			};
+
+		case 'NEW_ITEM_TEXT':
+			return { ...state, input: action.payload };
+
+		case 'TOGGLE_COMPLETE':
+			return {
+				...state,
+				items: state.items.map((item) => {
+					if (item.id !== action.payload) {
+						return item;
+					}
+					return {
+						...item,
+						completed: !item.completed,
+					};
+				}),
+			};
+
+		case 'CLEAR_COMPLETED':
+			return {
+				...state,
+				list: state.list.filter((item) => {
+					if (!item.completed) {
+						return item;
+					}
+				}),
+			};
+
 		default:
 			return state;
 	}
 };
 
-export default reducer;
+export { initialState, reducer };
